@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnoAir - Manage Flights</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="js/manageFlights.js"></script>
+    <script type="module" src="js/flights.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1><a href="index.html">OnoAir</a></h1>
+    </div>
+    <div class="main">
+        <h2>Manage Flights</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Flight No.</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Boarding Date</th>
+                    <th>Boarding Time</th>
+                    <th>Arrival Date</th>
+                    <th>Arrival Time</th>
+                </tr>
+            </thead>
+            <tbody id="flightsTableTbody">
+              
+            </tbody>
+        </table>
+        <button onclick="window.location.href='add-flight.html'">Add Flight</button>
+    </div>
+    <div class="footer">
+        <a href="help.html" class="help-icon" aria-label="Help">
+            <span>?</span>
+        </a>
+    </div>
+</body>
+</html>

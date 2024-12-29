@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnoAir - Main Screen</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="header">
+        <div class="menu-icon" onclick="toggleMenu()">
+            &#9776;
+        </div>
+        <h1><a href="index.html">OnoAir</a></h1>
+    </div>
+
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <div id="popupMenu" class="popup-menu">
+        <ul id="mainMenu">
+            <li onclick="showSubMenu('admin')"><strong>Admin</strong></li>
+            <li onclick="showSubMenu('user')"><strong>User</strong></li>
+        </ul>
+
+        <ul id="adminSubMenu" class="sub-menu">
+            <li><a href="manageFlights.html">Manage Flights</a></li>
+            <li><a href="manage-destinations.html">Manage Destinations</a></li>
+        </ul>
+
+        <ul id="userSubMenu" class="sub-menu">
+            <li><a href="flight-search.html">Book a Flight</a></li>
+            <li><a href="my-bookings.html">Manage Bookings</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <p><a href="manageFlights.html">Admin - Manage Flights</a></p>
+        <p><a href="manage-destinations.html">Admin - Manage Destinations</a></p>
+        <p><a href="flight-search.html">User - Book a Flight</a></p>
+        <p><a href="my-bookings.html">User - Manage Bookings</a></p>
+    </div>
+    
+    <div class="footer">
+        <a href="help.html" class="help-icon" aria-label="Help">
+            <span>?</span>
+        </a>
+    </div>
+
+    <script src="js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* עיצוב התפריט הקופץ */
+.popup-menu {
+    position: absolute;
+    top: 50px; /* מיקום התפריט למעלה */
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    display: none; /* התפריט מוסתר ברירת מחדל */
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+.popup-menu.open {
+    display: block; /* הצגת התפריט כאשר הוא נפתח */
+}
+
+.popup-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.popup-menu li {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.popup-menu li:hover {
+    background-color: #555;
+}
+
+.sub-menu {
+    display: none;
+    list-style-type: none;
+    padding: 10px 0;
+    margin-top: 5px;
+}
+
+.sub-menu li {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.overlay.show {
+    display: block;
+}
+
+
+.header {
+    background-color: #ff69b4;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.menu-icon {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.main {
+    flex: 1;
+    padding: 20px;
+}
+
+.main.flight-search-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    }
+    
+
+.center-text {
+    text-align: center;
+}
+
+#flight-search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0;
+    padding: 10px;
+}
+
+.form-group {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    max-width: 400px;
+}
+
+form p {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+select {
+    width: 200px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+
+input {
+    flex: 1;
+    max-width: 250px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: fit-content;
+    padding: 10px 20px;
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #ff1493;
+}
+
+label {
+    width: 120px;
+    text-align: left;
+    font-size: 14px;
+}
+
+input, select {
+    flex: 1;
+    max-width: 250px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+#bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+#bookings-table th, #bookings-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+#bookings-table th {
+    text-align: left;
+    background-color: #f2f2f2;
+}
+
+#bookings-table td:first-child {
+    width: 100px;
+    text-align: center;
+}
+
+#bookings-table img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+#bookings-table td:last-child {
+    width: auto;
+}
+
+.footer {
+    background-color: #ffb6c1;
+    border-top: 5px solid #ff1493;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.help-icon {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.help-icon:hover {
+    background-color: #333333;
+    transform: scale(1.1);
+}

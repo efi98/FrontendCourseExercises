@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnoAir - Flight Search</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1><a href="index.html">OnoAir</a></h1>
+    </div>
+    <div class="main flight-search-page">
+        <h2 class="center-text">Book a Flight</h2>
+        <form id="flight-search-form">
+            <div class="form-group">
+                <label for="origin">Origin:</label>
+                <select id="origin">
+                 
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="destination">Destination:</label>
+                <select id="destination">
+                
+                </select>
+            </div>
+            <button type="submit">Search</button>
+        </form>
+
+        <h3>Available Flights</h3>
+        <table id="flightsTable">
+            <thead>
+                <tr>
+                    <th>Flight Name</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Departure Time</th>
+                    <th>Airport Name</th>
+                    <th>Airport Website</th>
+                    <th>Book</th>
+                </tr>
+            </thead>
+            <tbody id="flightsTableBody">
+           
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">
+        <a href="help.html" class="help-icon" aria-label="Help">
+            <span>?</span>
+        </a>
+    </div>
+
+    <script type="module" src="js/flightSearch.js"></script>
+</body>
+</html>
