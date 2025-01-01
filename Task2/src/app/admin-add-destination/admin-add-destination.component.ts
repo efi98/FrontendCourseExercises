@@ -42,6 +42,9 @@ export class AdminAddDestinationComponent {
 
   addDestination() {
     if (this.destinationForm.valid) {
+
+      
+
       this.destination_service.addDestination({
         ...this.destinationForm.value,
         destination_code:

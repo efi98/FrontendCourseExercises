@@ -9,6 +9,8 @@ import { UserBookFlightFormComponent } from './user-book-flight-form/user-book-f
 import { UserManageBookingsComponent } from './user-manage-bookings/user-manage-bookings.component';
 import { DestinationDetailsComponent } from './destination-details/destination-details.component';
 import { GuidanceComponent } from './guidance/guidance.component';
+import { FlightDetailsComponent } from './flight-details/flight-details.component';
+import { UserBookingDetailsComponent } from './user-booking-details/user-booking-details.component';
 
 export const routes: Routes = [
   {
@@ -36,7 +38,7 @@ export const routes: Routes = [
     component: UserBookFlightComponent,
   },
   {
-    path: 'user-book-flight-form',
+    path: 'user-book-flight-form/:flight_id',
     component: UserBookFlightFormComponent,
   },
   {
@@ -48,7 +50,15 @@ export const routes: Routes = [
     component: DestinationDetailsComponent,
   },
   {
-    path:'help',
-    component: GuidanceComponent
-  }
+    path: 'flight-details/:flight_id',
+    component: FlightDetailsComponent,
+  },
+  {
+    path: 'user-booking-details/:booking_id',
+    component: UserBookingDetailsComponent,
+  },
+  {
+    path: 'help',
+    component: GuidanceComponent,
+  },
 ];

@@ -20,9 +20,9 @@ function toFirstFlight(destination: string) {
   providedIn: 'root',
 })
 export class DestinationsService {
-  private destinationsData = [
+  private destinationsData: Destination[] = [
     ...new Set(
-      flightsData.map((flight) => flight.destination).map(toFirstFlight)
+      flightsData.map((flight: Flight) => flight.destination).map(toFirstFlight)
     ),
   ].map(toDestination);
 

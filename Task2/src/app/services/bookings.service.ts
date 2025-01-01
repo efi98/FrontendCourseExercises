@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Booking } from '../types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BookingsService {
+  bookings: Booking[] = [];
+  constructor() {}
 
-  constructor() { }
+  addBooking(booking: Booking) {
+    this.bookings.push(booking);
+  }
 }
