@@ -18,7 +18,7 @@ export class DestinationsService {
 
   public async addDestination(destination: Destination) {
     try {
-      const destinationRef = doc(collection(this.firestore, "desinations"));
+      const destinationRef = doc(collection(this.firestore, "destinations"));
       destination.destination_id = destinationRef.id;
       await setDoc(destinationRef, destination);
     } catch (e: any) {
