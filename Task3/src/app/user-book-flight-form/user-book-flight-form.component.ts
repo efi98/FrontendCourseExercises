@@ -80,6 +80,7 @@ export class UserBookFlightFormComponent implements OnInit, OnDestroy {
       passengers: this.passenger_details,
     });
     alert("Flight booked successfully!");
-    this.router.navigate(["/user-book-flight"]);
+    window.location.reload();
+    window.location.href = "/user-book-flight"
   }
 }
