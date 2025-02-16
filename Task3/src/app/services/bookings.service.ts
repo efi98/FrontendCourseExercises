@@ -1,8 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { Booking } from "../types";
 import { map, Observable } from "rxjs";
-import { addDoc, collection, doc, DocumentData, setDoc } from "@firebase/firestore";
-import { collectionData, Firestore } from "@angular/fire/firestore";
+import { collection, collectionData, doc, Firestore, setDoc } from "@angular/fire/firestore";
 
 @Injectable({
   providedIn: "root",
@@ -10,7 +9,7 @@ import { collectionData, Firestore } from "@angular/fire/firestore";
 export class BookingsService {
   firestore = inject(Firestore);
   bookings: Observable<Booking[]> = collectionData(collection(this.firestore, "bookings")).pipe(
-    map((data) => data.map((doc: DocumentData) => doc as Booking))
+    map((data: any) => data.map((doc: Booking) => doc))
   );
 
   constructor() {}

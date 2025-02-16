@@ -1,8 +1,7 @@
 import { inject, Injectable } from "@angular/core";
-import { Destination, Flight, Status } from "../types";
+import { Destination } from "../types";
 import { map, Observable } from "rxjs";
-import { addDoc, collection, doc, DocumentData, setDoc } from "@firebase/firestore";
-import { collectionData, Firestore } from "@angular/fire/firestore";
+import { collection, collectionData, doc, Firestore, setDoc } from "@angular/fire/firestore";
 
 @Injectable({
   providedIn: "root",
@@ -14,7 +13,7 @@ export class DestinationsService {
     {
       idField: "id",
     }
-  ).pipe(map((data) => data.map((doc: DocumentData) => doc as Destination)));
+  ).pipe(map((data: any) => data.map((doc: Destination) => doc)));
 
   public async addDestination(destination: Destination) {
     try {
