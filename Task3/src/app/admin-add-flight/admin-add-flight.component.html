@@ -37,6 +37,10 @@
                     formControlName="boarding_date">
             </mat-form-field>
             <small
+                    *ngIf="flightForm.get('boarding_date')?.hasError('required') && flightForm.get('boarding_date')?.touched">
+                Boarding date is required
+            </small>
+            <small
                 *ngIf="flightForm.get('boarding_date')?.hasError('pastDate') && flightForm.get('boarding_date')?.touched">
                 Boarding date must be in the future
             </small>
@@ -60,6 +64,10 @@
                     formControlName="arrival_date">
             </mat-form-field>
             <small
+                    *ngIf="flightForm.get('arrival_date')?.hasError('required') && flightForm.get('arrival_date')?.touched">
+                Arrival date is required
+            </small>
+            <small
                 *ngIf="flightForm.get('arrival_date')?.hasError('pastDate') && flightForm.get('arrival_date')?.touched">
                 Arrival date must be in the future
             </small>
@@ -71,6 +79,10 @@
                 <input required matInput type="time" class="form-control" id="arrivalTime"
                     formControlName="arrival_time">
             </mat-form-field>
+            <small
+                    *ngIf="flightForm.get('arrival_time')?.hasError('required') && flightForm.get('arrival_time')?.touched">
+                Arrival time is required
+            </small>
             <small
                 *ngIf="flightForm.get('arrival_time')?.hasError('timeInvalid') && flightForm.get('arrival_time')?.touched">
                 Arrival time must be after the boarding time
@@ -84,15 +96,18 @@
                     formControlName="numberOfPassengers">
             </mat-form-field>
             <small
+                *ngIf="flightForm.get('numberOfPassengers')?.hasError('required') && flightForm.get('numberOfPassengers')?.touched">
+                Number of passengers is required
+            </small>
+            <small
                 *ngIf="flightForm.get('numberOfPassengers')?.hasError('min') && flightForm.get('numberOfPassengers')?.touched">
-                Number of passengers must be greater than 0
+                Number of passengers must be {{numOfSeatsPolicy.min}} and above
             </small>
             <small 
                 *ngIf="flightForm.get('numberOfPassengers')?.hasError('max') && flightForm.get('numberOfPassengers')?.touched">
-                Number of passengers cannot exceed 200
+                Number of passengers cannot exceed {{numOfSeatsPolicy.max}}
             </small>
         </div>
-
 
         <button type="submit" class="btn btn-primary">Save</button>
     </form>

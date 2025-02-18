@@ -5,25 +5,25 @@ import { RouterModule } from '@angular/router';
 import { FlightsService } from '../services/flights.service';
 
 @Component({
-  selector: 'app-admin-manage-flights',
-  imports: [MatTableModule, RouterModule, MatIconModule],
-  templateUrl: './admin-manage-flights.component.html',
-  styleUrl: './admin-manage-flights.component.scss',
+    selector: 'app-admin-manage-flights',
+    imports: [MatTableModule, RouterModule, MatIconModule],
+    templateUrl: './admin-manage-flights.component.html',
+    styleUrl: './admin-manage-flights.component.scss',
 })
 export class AdminManageFlightsComponent {
-  displayedColumns: string[] = [
-    'flight_id',
-    'origin',
-    'destination',
-    'boarding_date',
-    'boarding_time',
-    'arrival_date',
-    'arrival_time',
-    'actions',
-  ];
-  flights_service = inject(FlightsService);
+    displayedColumns: string[] = [
+        'flight_id',
+        'origin',
+        'destination',
+        'boarding_date',
+        'boarding_time',
+        'arrival_date',
+        'arrival_time',
+        'actions',
+    ];
+    flights_service = inject(FlightsService);
 
-  public get flights() {
-    return this.flights_service.flights;
-  }
+    public get flights() {
+        return this.flights_service.flights;
+    }
 }

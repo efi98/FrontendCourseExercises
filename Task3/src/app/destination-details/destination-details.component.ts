@@ -4,13 +4,13 @@ import { Destination } from "../types";
 import { DestinationsService } from "../services/destinations.service";
 import { CommonModule } from "@angular/common";
 import { Subscription } from "rxjs";
-import { take } from "rxjs/operators";
+import { take, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-destination-details",
   imports: [RouterModule, CommonModule],
   templateUrl: "./destination-details.component.html",
-  styleUrls: ["./destination-details.component.scss"], // Fixed typo: styleUrl -> styleUrls
+  styleUrl: "./destination-details.component.scss"
 })
 export class DestinationDetailsComponent implements OnInit, OnDestroy {
   destination?: Destination;
@@ -24,7 +24,7 @@ export class DestinationDetailsComponent implements OnInit, OnDestroy {
     // Use observable for paramMap to handle dynamic route changes
     this.route.paramMap.subscribe((params) => {
       const destinationCode = params.get("destination_code");
-      if (!destinationCode) {
+      if (!destinationCode) { //todo: unreachable code
         alert("Invalid destination code provided.");
         this.router.navigate(["/admin-manage-destinations"]);
         return;
