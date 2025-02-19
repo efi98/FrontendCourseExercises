@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
-import { FlightsService } from '../services/flights.service';
+import { FlightsService } from '../../services/flights.service';
 
 @Component({
     selector: 'app-admin-manage-flights',

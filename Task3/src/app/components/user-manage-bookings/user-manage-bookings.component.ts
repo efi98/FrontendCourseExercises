@@ -1,10 +1,10 @@
 import { Component, inject } from "@angular/core";
-import { BookingsService } from "../services/bookings.service";
+import { BookingsService } from "../../services/bookings.service";
 import { MatTableModule } from "@angular/material/table";
 import { RouterModule } from "@angular/router";
 import { MatIconModule } from "@angular/material/icon";
 import { map, Observable } from "rxjs";
-import { Booking } from "../types";
+import { Booking } from "../../types";
 
 @Component({
     selector: "app-user-manage-bookings",

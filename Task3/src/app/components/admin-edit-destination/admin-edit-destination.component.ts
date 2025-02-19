@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
-import { DestinationsService } from "../services/destinations.service";
-import { Destination } from "../types";
+import { DestinationsService } from "../../services/destinations.service";
+import { Destination } from "../../types";
 import { Subscription } from "rxjs";
 import { MatRadioModule } from "@angular/material/radio";
 

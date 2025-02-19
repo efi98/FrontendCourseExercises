@@ -2,18 +2,18 @@ import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from "@angular/material/table";
 import { RouterModule } from "@angular/router";
-import { FlightsService } from "../services/flights.service";
-import { DestinationsService } from "../services/destinations.service";
+import { FlightsService } from "../../services/flights.service";
+import { DestinationsService } from "../../services/destinations.service";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatOptionModule } from "@angular/material/core";
-import { Destination, Flight } from "../types";
+import { Destination, Flight } from "../../types";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { isSameDate } from "../utilities/util";
+import { isSameDate } from "../../utilities/util";
 
 @Component({
     selector: "app-user-book-flight",

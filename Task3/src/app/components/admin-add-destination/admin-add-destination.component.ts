@@ -2,10 +2,10 @@ import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { DestinationsService } from "../services/destinations.service";
+import { DestinationsService } from "../../services/destinations.service";
 import { Router, RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { Destination } from "../types";
+import { Destination } from "../../types";
 import { Subscription } from "rxjs";
 
 @Component({

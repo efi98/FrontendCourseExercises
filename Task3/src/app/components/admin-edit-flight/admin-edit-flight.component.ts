@@ -1,23 +1,33 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, OnDestroy, OnInit } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { Router } from "@angular/router";
-import { DestinationsService } from "../services/destinations.service";
-import { FlightsService } from "../services/flights.service";
-import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
-import { Destination, Flight } from "../types";
+import { MatSelectModule } from "@angular/material/select";
+import { DestinationsService } from "../../services/destinations.service";
+import { FlightsService } from "../../services/flights.service";
+import { Destination, Flight } from "../../types";
 import { Subscription } from "rxjs";
-import { numOfSeatsPolicy } from "../utilities/util";
+import { ActivatedRoute, Router } from "@angular/router";
+import { MatRadioModule } from "@angular/material/radio";
+import { numOfSeatsPolicy } from "../../utilities/util";
 
 @Component({
-    selector: "app-admin-add-flight",
-    imports: [CommonModule, MatFormFieldModule, ReactiveFormsModule, MatSelectModule, MatInputModule],
-    templateUrl: "./admin-add-flight.component.html",
-    styleUrl: "./admin-add-flight.component.scss",
+    selector: "app-admin-edit-flight",
+    imports: [
+        CommonModule,
+        MatFormFieldModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatInputModule,
+    ],
+
+    templateUrl: "./admin-edit-flight.component.html",
+    styleUrl: "./admin-edit-flight.component.scss",
 })
-export class AdminAddFlightComponent implements OnInit, OnDestroy {
+export class AdminEditFlightComponent {
+    flight?: Flight;
     flightForm!: FormGroup;
     destinations_service = inject(DestinationsService);
     flight_service = inject(FlightsService);
@@ -27,7 +37,11 @@ export class AdminAddFlightComponent implements OnInit, OnDestroy {
     destinations_subscription!: Subscription;
     protected readonly numOfSeatsPolicy = numOfSeatsPolicy;
 
-    constructor(private formBuilder: FormBuilder, private router: Router) {
+    constructor(
+        private formBuilder: FormBuilder,
+        private router: Router,
+        private route: ActivatedRoute
+    ) {
         this.flightForm = this.formBuilder.group(
             {
                 // destonation name has to be filled in
@@ -38,6 +52,7 @@ export class AdminAddFlightComponent implements OnInit, OnDestroy {
                 arrival_date: ["", Validators.required],
                 arrival_time: ["", Validators.required],
                 numberOfPassengers: ["", [Validators.required, Validators.min(numOfSeatsPolicy.min), Validators.max(numOfSeatsPolicy.max)]],
+                status: [null, Validators.required]
             },
             {
                 validators: [
@@ -57,7 +72,28 @@ export class AdminAddFlightComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.flights_subscription = this.flight_service.flights.subscribe((flights) => {
             this.all_flights = flights;
+            const dest = flights.find((d) => d.flight_id == code); // Find the destination with the matching code
+            if (!dest) {
+                alert("Destination not found.");
+                this.router.navigate(["/admin-manage-destinations"]); // If no destination is found, redirect to the destinations page
+                return;
+            }
+            this.flight = dest;
+            const keys = Object.keys(this.flightForm.controls);
+            for (let key of keys) {
+                this.flightForm.patchValue({
+                    [key]: (dest as any)[key],
+                });
+            }
+            this.flights_subscription.unsubscribe();
         });
+        const code = this.route.snapshot.paramMap.get("flight_id"); // Retrieve the parameter
+        if (!code) {
+            alert("Invalid flight id provided.");
+            this.router.navigate(["/admin-manage-flights"]); // If no code is provided, redirect to the destinations page
+            return;
+        }
+
         this.destinations_subscription = this.destinations_service.destinationsData.subscribe(
             (destinations) => {
                 this.all_destinations = destinations;
@@ -92,9 +128,10 @@ export class AdminAddFlightComponent implements OnInit, OnDestroy {
         };
     }
 
-    addFlight() {
+    saveChanges() {
         if (this.flightForm.valid) {
             // todo - use 'dateMismatch' instead (then the form is invalid)
+            // check boarding date is before arrival date
             if (
                 new Date(this.flightForm.value.boarding_date) > new Date(this.flightForm.value.arrival_date)
             ) {
@@ -110,14 +147,15 @@ export class AdminAddFlightComponent implements OnInit, OnDestroy {
                 (d) => d.destination_name === this.flightForm.value.destination
             );
 
-            this.flight_service.addFlight({
+            this.flight_service.editFlight({
                 ...this.flightForm.value,
+                flight_id: this.flight?.flight_id,
                 image_url: destination?.image_url,
                 link: destination?.airport_url,
                 airportName: destination?.airport_name,
                 airportWebsite: destination?.airport_url,
             });
-            alert("Flight added successfully!");
+            alert("Flight changes saved successfully!");
             this.router.navigate(["/admin-manage-flights"]);
         } else {
             // Mark all fields as touched to show validation messages

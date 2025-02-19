@@ -2,7 +2,7 @@ import { Component, inject } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from "@angular/material/table";
 import { RouterModule } from "@angular/router";
-import { FlightsService } from "../services/flights.service";
+import { FlightsService } from "../../services/flights.service";
 import { MatCardModule } from "@angular/material/card";
 import { CommonModule } from "@angular/common";
 import { map } from "rxjs";

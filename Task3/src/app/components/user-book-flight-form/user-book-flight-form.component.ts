@@ -4,10 +4,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
-import { Flight, Passenger } from "../types";
-import { FlightsService } from "../services/flights.service";
+import { Flight, Passenger } from "../../types";
+import { FlightsService } from "../../services/flights.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { BookingsService } from "../services/bookings.service";
+import { BookingsService } from "../../services/bookings.service";
 import { Subscription } from "rxjs";
 
 @Component({

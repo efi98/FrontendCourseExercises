@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { DestinationsService } from '../services/destinations.service';
+import { DestinationsService } from '../../services/destinations.service';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';

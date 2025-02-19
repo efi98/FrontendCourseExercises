@@ -1,18 +1,18 @@
 import { Routes } from "@angular/router";
-import { LastMinuteFlightsComponent } from "./last-minute-flights/last-minute-flights.component";
-import { AdminAddDestinationComponent } from "./admin-add-destination/admin-add-destination.component";
-import { AdminAddFlightComponent } from "./admin-add-flight/admin-add-flight.component";
-import { AdminManageFlightsComponent } from "./admin-manage-flights/admin-manage-flights.component";
-import { AdminManageDestinationsComponent } from "./admin-manage-destinations/admin-manage-destinations.component";
-import { UserBookFlightComponent } from "./user-book-flight/user-book-flight.component";
-import { UserBookFlightFormComponent } from "./user-book-flight-form/user-book-flight-form.component";
-import { UserManageBookingsComponent } from "./user-manage-bookings/user-manage-bookings.component";
-import { DestinationDetailsComponent } from "./destination-details/destination-details.component";
-import { GuidanceComponent } from "./guidance/guidance.component";
-import { FlightDetailsComponent } from "./flight-details/flight-details.component";
-import { UserBookingDetailsComponent } from "./user-booking-details/user-booking-details.component";
-import { AdminEditFlightComponent } from "./admin-edit-flight/admin-edit-flight.component";
-import { AdminEditDestinationComponent } from "./admin-edit-destination/admin-edit-destination.component";
+import { LastMinuteFlightsComponent } from "./components/last-minute-flights/last-minute-flights.component";
+import { AdminAddDestinationComponent } from "./components/admin-add-destination/admin-add-destination.component";
+import { AdminAddFlightComponent } from "./components/admin-add-flight/admin-add-flight.component";
+import { AdminManageFlightsComponent } from "./components/admin-manage-flights/admin-manage-flights.component";
+import { AdminManageDestinationsComponent } from "./components/admin-manage-destinations/admin-manage-destinations.component";
+import { UserBookFlightComponent } from "./components/user-book-flight/user-book-flight.component";
+import { UserBookFlightFormComponent } from "./components/user-book-flight-form/user-book-flight-form.component";
+import { UserManageBookingsComponent } from "./components/user-manage-bookings/user-manage-bookings.component";
+import { DestinationDetailsComponent } from "./components/destination-details/destination-details.component";
+import { GuidanceComponent } from "./components/guidance/guidance.component";
+import { FlightDetailsComponent } from "./components/flight-details/flight-details.component";
+import { UserBookingDetailsComponent } from "./components/user-booking-details/user-booking-details.component";
+import { AdminEditFlightComponent } from "./components/admin-edit-flight/admin-edit-flight.component";
+import { AdminEditDestinationComponent } from "./components/admin-edit-destination/admin-edit-destination.component";
 
 export const routes: Routes = [
   {
@@ -71,4 +71,8 @@ export const routes: Routes = [
     path: "help",
     component: GuidanceComponent,
   },
+  {
+    path: "**",
+    redirectTo: "",
+  }
 ];
