@@ -5,7 +5,7 @@ import { MatInputModule } from "@angular/material/input";
 import { DestinationsService } from "../../services/destinations.service";
 import { Router, RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { Destination } from "../../types";
+import { Destination } from "@types";
 import { Subscription } from "rxjs";
 
 @Component({

@@ -8,7 +8,7 @@ import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatOptionModule } from "@angular/material/core";
-import { Destination, Flight } from "../../types";
+import { Destination, Flight } from "@types";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { MatFormFieldModule } from "@angular/material/form-field";

@@ -7,7 +7,7 @@ import { DestinationsService } from "../../services/destinations.service";
 import { FlightsService } from "../../services/flights.service";
 import { MatSelectModule } from "@angular/material/select";
 import { MatInputModule } from "@angular/material/input";
-import { Destination, Flight } from "../../types";
+import { Destination, Flight } from "@types";
 import { Subscription } from "rxjs";
 import { numOfSeatsPolicy } from "../../utilities/util";
 

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from "@angular/core";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
-import { Destination } from "../../types";
+import { Destination } from "@types";
 import { DestinationsService } from "../../services/destinations.service";
 import { CommonModule } from "@angular/common";
 import { Subscription } from "rxjs";

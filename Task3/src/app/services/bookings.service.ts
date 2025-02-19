@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { Booking } from "../types";
+import { Booking } from "@types";
 import { map, Observable } from "rxjs";
 import { collection, collectionData, deleteDoc, doc, Firestore, setDoc } from "@angular/fire/firestore";
 

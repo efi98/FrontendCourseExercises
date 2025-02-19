@@ -6,7 +6,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { DestinationsService } from "../../services/destinations.service";
 import { FlightsService } from "../../services/flights.service";
-import { Destination, Flight } from "../../types";
+import { Destination, Flight } from "@types";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatRadioModule } from "@angular/material/radio";
