@@ -1,20 +1,25 @@
 <div class="table-container">
 
     <h1>Last Minute Flights</h1>
-    <ng-container *ngIf="last_minute_flights | async as last_minute_flights">
-        <div class="booking-card-container">
-            <mat-card class="booking-card" *ngFor="let flight of last_minute_flights">
-                <mat-card-header>
-                    <mat-card-title>
-                        <img width="120" height="120" [src]="flight.image_url" alt="Destination Image"/>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <p><b>{{ flight.destination }}</b>&nbsp;({{ flight.boarding_date }})</p>
-                </mat-card-content>
-            </mat-card>
-        </div>
+    <ng-container *ngIf="(last_minute_flights | async) as last_minute_flights">
+        <ng-container *ngIf="last_minute_flights.length; else defaultMessage">
+            <div class="booking-card-container">
+                <mat-card class="booking-card" *ngFor="let flight of last_minute_flights">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <img width="120" height="120" [src]="flight.image_url" alt="Destination Image"/>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p><b>{{ flight.destination }}</b>&nbsp;({{ flight.boarding_date }})</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </ng-container>
     </ng-container>
+    <ng-template #defaultMessage>
+        <p>No Flights for next week...</p>
+    </ng-template>
     <h1>Find Flight</h1>
     <table mat-table [dataSource]="flights" class="design-table">
         <!--- Note that these columns can be defined in any order.
