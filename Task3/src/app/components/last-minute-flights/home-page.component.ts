@@ -10,10 +10,10 @@ import { map } from "rxjs";
 @Component({
     selector: "app-last-minute-flights",
     imports: [CommonModule, MatCardModule, MatTableModule, RouterModule, MatIconModule],
-    templateUrl: "./last-minute-flights.component.html",
-    styleUrl: "./last-minute-flights.component.scss",
+    templateUrl: "./home-page.component.html",
+    styleUrl: "./home-page.component.scss",
 })
-export class LastMinuteFlightsComponent {
+export class HomePageComponent {
 
     displayedColumns: string[] = ["flight_id", "origin", "destination", "boarding_date", "boarding_time", "arrival_date", "arrival_time", "book",];
     flights_service: FlightsService = inject(FlightsService);

@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { LastMinuteFlightsComponent } from "./components/last-minute-flights/last-minute-flights.component";
+import { HomePageComponent } from "./components/last-minute-flights/home-page.component";
 import { AdminAddDestinationComponent } from "./components/admin-add-destination/admin-add-destination.component";
 import { AdminAddFlightComponent } from "./components/admin-add-flight/admin-add-flight.component";
 import { AdminManageFlightsComponent } from "./components/admin-manage-flights/admin-manage-flights.component";
@@ -17,7 +17,7 @@ import { AdminEditDestinationComponent } from "./components/admin-edit-destinati
 export const routes: Routes = [
   {
     path: "",
-    component: LastMinuteFlightsComponent,
+    component: HomePageComponent,
   },
   {
     path: "admin-add-destination",
