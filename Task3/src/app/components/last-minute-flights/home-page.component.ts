@@ -6,10 +6,11 @@ import { FlightsService } from "../../services/flights.service";
 import { MatCardModule } from "@angular/material/card";
 import { CommonModule } from "@angular/common";
 import { map } from "rxjs";
+import { UserBookFlightComponent } from "../user-book-flight/user-book-flight.component";
 
 @Component({
     selector: "app-last-minute-flights",
-    imports: [CommonModule, MatCardModule, MatTableModule, RouterModule, MatIconModule],
+    imports: [CommonModule, MatCardModule, MatTableModule, RouterModule, MatIconModule, UserBookFlightComponent],
     templateUrl: "./home-page.component.html",
     styleUrl: "./home-page.component.scss",
 })

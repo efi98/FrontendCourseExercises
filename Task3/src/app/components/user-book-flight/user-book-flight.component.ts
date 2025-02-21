@@ -90,7 +90,6 @@ export class UserBookFlightComponent implements OnInit, OnDestroy {
         });
     }
 
-
     filterBoardingDate(date: Date): void {
         this.filter_boarding_date = date;
         this.filterFlights(); // Reapply the filters
