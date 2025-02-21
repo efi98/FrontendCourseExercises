@@ -1,6 +1,7 @@
 <div>
-    <form [formGroup]="flightForm" (ngSubmit)="saveChanges()" novalidate>
-        <h2 *ngIf="flight">Edit Flight {{ flight.flight_id }}</h2>
+    <form [formGroup]="flightForm" (ngSubmit)="submitForm()" novalidate>
+        <h2 *ngIf="isEditMode">Edit Flight {{ flight?.flight_id }}</h2>
+        <h2 *ngIf="!isEditMode">New Flight</h2>
         <div class="form-group">
             <mat-form-field>
                 <mat-label for="origin">Origin</mat-label>

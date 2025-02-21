@@ -1,7 +1,7 @@
 <div>
-    <form [formGroup]="destinationForm" (ngSubmit)="saveChanges()" novalidate>
-        <h2>Edit Destination</h2>
-
+    <form [formGroup]="destinationForm" (ngSubmit)="submitForm()" novalidate>
+        <h2 *ngIf="isEditMode">Edit Destination {{ destination?.destination_id }}</h2>
+        <h2 *ngIf="!isEditMode">New Destination</h2>
         <div class="form-group">
             <mat-form-field>
                 <mat-label for="destinationName">Destination Name</mat-label>
