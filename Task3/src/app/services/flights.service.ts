@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
-import { collection, collectionData, doc, Firestore, setDoc, deleteDoc} from "@angular/fire/firestore";
-import { map, Observable } from "rxjs";
+import { collection, collectionData, doc, Firestore, setDoc, deleteDoc, docData, query, where, getDocs} from "@angular/fire/firestore";
+import { catchError, from, map, Observable, of } from "rxjs";
 import { Flight } from "@types";
 
 @Injectable({
@@ -14,6 +14,44 @@ export class FlightsService {
 
     public get flights() {
         return this.flightsData;
+    }
+
+    public get flightsByDate() {
+        return (departureDate: Date, arrivalDate?: Date): Observable<Flight[]> => {
+            const flightsCollection = collection(this.firestore, "flights");
+
+            // Convert dates to string format matching Firestore storage (ISO format)
+            const departureStr = departureDate.toISOString().split("T")[0]; // "YYYY-MM-DD"
+            const queryConditions = [where("boarding_date", ">=", departureStr)];
+
+            if (arrivalDate) {
+                const arrivalStr = arrivalDate.toISOString().split("T")[0];
+                queryConditions.push(where("arrival_date", "<=", arrivalStr));
+            }
+
+            // Build the query dynamically
+            const flightsQuery = query(flightsCollection, ...queryConditions);
+
+            return from(getDocs(flightsQuery)).pipe(
+                map(snapshot => snapshot.docs.map(doc => ({ ...doc.data(), flight_id: doc.id } as Flight))),
+                catchError(error => {
+                    console.error(`Error fetching flights between ${departureStr} and ${arrivalDate ? arrivalDate.toISOString().split("T")[0] : 'N/A'}:`, error);
+                    return [[]]; // Return an empty array on error
+                })
+            );
+        };
+    }
+
+    public get flight() {
+        return (id: string): Observable<Flight | null> => {
+            const flightDoc = doc(this.firestore, `flights/${id}`);
+            return docData(flightDoc).pipe(
+                catchError((error) => {
+                    console.error(`Error fetching flight with ID ${id}:`, error);
+                    return of(null); // Return null if an error occurs
+                })
+            ) as Observable<Flight | null>;
+        };
     }
 
     public async addFlight(flight: Flight) {
