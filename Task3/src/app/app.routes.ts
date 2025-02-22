@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { HomePageComponent } from "./components/last-minute-flights/home-page.component";
+import { HomePageComponent } from "./components/home-page/home-page.component";
 import { AdminManageFlightsComponent } from "./components/admin-manage-flights/admin-manage-flights.component";
 import {
     AdminManageDestinationsComponent
