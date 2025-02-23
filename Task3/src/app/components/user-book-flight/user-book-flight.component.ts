@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, inject, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from "@angular/material/table";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
@@ -38,6 +38,7 @@ import { DatePickerComponent } from "../date-picker/date-picker.component";
     styleUrl: "./user-book-flight.component.scss",
 })
 export class UserBookFlightComponent implements OnInit, OnDestroy {
+    @Input() displayFilters = true;
     @ViewChild(DatePickerComponent) datePickerComponent!: DatePickerComponent;
     flights_service: FlightsService = inject(FlightsService);
     destinations_service: DestinationsService = inject(DestinationsService);
