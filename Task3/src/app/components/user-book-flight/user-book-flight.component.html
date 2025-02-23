@@ -1,18 +1,31 @@
 <div class="table-container">
-    <div style="margin-bottom:.5rem; width:200px; gap:1rem; display: flex; justify-content: space-between; flex-direction:column;">
-        <label>Origin</label>
-        <mat-select [(ngModel)]="filter_origin" class="form-control" placeholder="Select origin"
-                    (valueChange)="filterOrigin($event)">
-            <mat-option *ngFor="let origin of all_destinations" [value]="origin">{{ origin.destination_name }}
-            </mat-option>
-        </mat-select>
-        <label>Destination</label>
-        <mat-select [(ngModel)]="filter_destination" class="form-control" placeholder="Select destination"
-                    (valueChange)="filterDestination($event)">
-            <mat-option *ngFor="let destination of all_destinations"
-                        [value]="destination">{{ destination.destination_name }}
-            </mat-option>
-        </mat-select>
+    <div class="search-section">
+        <div class="search-container">
+            <div style="margin-bottom:.5rem; width: 200px;gap:1rem; display: flex; justify-content: flex-start; flex-direction:column;">
+                <label>Origin</label>
+                <mat-select [(ngModel)]="filter_origin" class="form-control" placeholder="Select origin"
+                            (valueChange)="filterOrigin($event)">
+                    <mat-option *ngFor="let origin of all_destinations" [value]="origin">{{ origin.destination_name }}
+                    </mat-option>
+                </mat-select>
+                <label>Destination</label>
+                <mat-select [(ngModel)]="filter_destination" class="form-control" placeholder="Select destination"
+                            (valueChange)="filterDestination($event)">
+                    <mat-option *ngFor="let destination of all_destinations"
+                                [value]="destination">{{ destination.destination_name }}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div class="date-filter">
+                <mat-button-toggle-group (change)="setModeVal($event)" value="false" name="expandedMode"
+                                         aria-label="Expanded Mode">
+                    <mat-button-toggle value="false">Exact Dates</mat-button-toggle>
+                    <mat-button-toggle value="true">Expanded search</mat-button-toggle>
+                </mat-button-toggle-group>
+                <app-date-picker [expandedMode]="expandedMode"
+                                 (onDateRangeChanged)="filterFlightsByDateRange($event)"></app-date-picker>
+            </div>
+        </div>
         <button class="btn btn-primary" (click)="showAll()">
             Clear filters
         </button>
