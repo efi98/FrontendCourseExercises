@@ -55,12 +55,12 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
     constructor(private formBuilder: FormBuilder) {
         this.range = this.formBuilder.group({
             start: [null, Validators.required],
-            end: [null, Validators.required]
+            end: [null]
         });
 
         this.rangeMonth = this.formBuilder.group({
             start: [moment(), Validators.required],
-            end: [null, Validators.required]
+            end: [null]
         });
     }
 
@@ -74,7 +74,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
             }),
             distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
             takeUntil(this.destroyed$)).subscribe((data: any) => {
-            if (this.range.valid) {
+            if (this.range.get('start')?.value) {
                 let {start, end} = data;
                 this.onDateRangeChanged.emit({start, end});
             }
@@ -89,7 +89,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
             }),
             distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
             takeUntil(this.destroyed$)).subscribe((data: any) => {
-            if (this.rangeMonth.valid) {
+            if (this.rangeMonth.get('start')?.value) {
                 let {start, end} = data;
                 this.onDateRangeChanged.emit({start, end});
             }
@@ -138,7 +138,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     resetForms(): void {
-        this.range.reset();
-        this.rangeMonth.reset();
+        this.range.reset(null, {onlySelf: true, emitEvent: false});
+        this.rangeMonth.reset(null, {onlySelf: true, emitEvent: false});
     }
 }

@@ -15,5 +15,5 @@ import { UserBookFlightComponent } from "../user-book-flight/user-book-flight.co
 })
 export class HomePageComponent {
     flights_service: FlightsService = inject(FlightsService);
-    last_minute_flights = this.flights_service.flightsByDate(new Date());
+    last_minute_flights = this.flights_service.flightsByFilters({startDate: new Date()});
 }

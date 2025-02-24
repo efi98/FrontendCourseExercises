@@ -16,31 +16,38 @@ export class FlightsService {
         return this.flightsData;
     }
 
-    public get flightsByDate() {
-        return (departureDate: Date, arrivalDate?: Date): Observable<Flight[]> => {
+    public get flightsByFilters() {
+        return (filters: { origin?: string; destination?: string; startDate?: Date; endDate?: Date }): Observable<Flight[]> => {
             const flightsCollection = collection(this.firestore, "flights");
+            let queryConditions = [];
 
-            // Convert dates to string format matching Firestore storage (ISO format)
-            const departureStr = departureDate.toISOString().split("T")[0]; // "YYYY-MM-DD"
-            const queryConditions = [where("boarding_date", ">=", departureStr)];
-
-            if (arrivalDate) {
-                const arrivalStr = arrivalDate.toISOString().split("T")[0];
+            if (filters.origin) {
+                queryConditions.push(where("origin", "==", filters.origin));
+            }
+            if (filters.destination) {
+                queryConditions.push(where("destination", "==", filters.destination));
+            }
+            if (filters.startDate) {
+                const departureStr = filters.startDate.toISOString().split("T")[0];
+                queryConditions.push(where("boarding_date", ">=", departureStr));
+            }
+            if (filters.endDate) {
+                const arrivalStr = filters.endDate.toISOString().split("T")[0];
                 queryConditions.push(where("arrival_date", "<=", arrivalStr));
             }
 
-            // Build the query dynamically
             const flightsQuery = query(flightsCollection, ...queryConditions);
 
             return from(getDocs(flightsQuery)).pipe(
                 map(snapshot => snapshot.docs.map(doc => ({ ...doc.data(), flight_id: doc.id } as Flight))),
                 catchError(error => {
-                    console.error(`Error fetching flights between ${departureStr} and ${arrivalDate ? arrivalDate.toISOString().split("T")[0] : 'N/A'}:`, error);
-                    return [[]]; // Return an empty array on error
+                    console.error("Error fetching flights:", error);
+                    return [[]];
                 })
             );
         };
     }
+
 
     public get flight() {
         return (id: string): Observable<Flight | null> => {
