@@ -15,4 +15,5 @@ export interface Flight {
     airportName: string;
     airportWebsite: string;
     numberOfPassengers: number;
+    price: number; // New field for flight price
 }

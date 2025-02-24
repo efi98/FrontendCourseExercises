@@ -92,6 +92,23 @@
 
         <div class="form-group">
             <mat-form-field>
+                <mat-label for="price"> Flight Price ($)</mat-label>
+                <input required matInput type="number" class="form-control" id="price"
+                       formControlName="price">
+            </mat-form-field>
+
+            <small
+                    *ngIf="flightForm.get('arrival_time')?.hasError('required') && flightForm.get('arrival_time')?.touched">
+                Arrival time is required
+            </small>
+            <small
+                    *ngIf="flightForm.get('arrival_time')?.hasError('timeInvalid') && flightForm.get('arrival_time')?.touched">
+                Arrival time must be after the boarding time
+            </small>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
                 <mat-label for="numberOfPassengers">No. of seats</mat-label>
                 <input required matInput type="number" class="form-control" id="numberOfPassengers"
                        formControlName="numberOfPassengers">

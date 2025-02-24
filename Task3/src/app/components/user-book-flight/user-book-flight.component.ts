@@ -63,6 +63,7 @@ export class UserBookFlightComponent implements OnInit, OnDestroy {
         "boarding_time",
         "arrival_date",
         "arrival_time",
+        "price",
         "book",
     ];
 

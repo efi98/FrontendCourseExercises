@@ -19,7 +19,8 @@ export class AdminManageFlightsComponent {
         'boarding_time',
         'arrival_date',
         'arrival_time',
-        'actions',
+        'price',
+        'actions'
     ];
     flights_service = inject(FlightsService);
 

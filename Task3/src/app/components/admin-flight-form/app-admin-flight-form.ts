@@ -10,7 +10,7 @@ import { Destination, Flight } from "@types";
 import { first, map, Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatRadioModule } from "@angular/material/radio";
-import { numOfSeatsPolicy } from "../../utilities/util";
+import { numOfSeatsPolicy, positiveNumberValidator } from "../../utilities/util";
 
 @Component({
     selector: "app-admin-flight-form",
@@ -51,6 +51,7 @@ export class AdminFlightFormComponent {
                 boarding_time: ["", Validators.required],
                 arrival_date: ["", Validators.required],
                 arrival_time: ["", Validators.required],
+                price: [null, [Validators.required, positiveNumberValidator]],
                 numberOfPassengers: ["", [Validators.required, Validators.min(numOfSeatsPolicy.min), Validators.max(numOfSeatsPolicy.max)]],
                 status: [null, Validators.required]
             },
