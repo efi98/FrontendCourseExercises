@@ -1,13 +1,28 @@
-.count-select {
-  border: 1px solid lightgray;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  width: fit-content;
-  min-width: 200px;
-}
-
 .pass-details {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.mat-stepper-vertical {
+  margin-top: 8px;
+}
+
+.mat-mdc-form-field {
+  margin-top: 16px;
+}
+
+.luggage-card {
+  max-width: 400px;
+  margin: 1rem;
+}
+
+.luggage-card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.luggage-card-footer {
+  padding: 16px;
 }

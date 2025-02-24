@@ -7,3 +7,8 @@ export const strToBool = (value: string): boolean => value.toLowerCase() === 'tr
 export const isValidDate = (date: any): boolean => {
     return date instanceof Date && !isNaN(date.getTime());
 };
+export const luggageWeights = {
+    cabin: 8,
+    checked: 23,
+    heavy: 32
+};

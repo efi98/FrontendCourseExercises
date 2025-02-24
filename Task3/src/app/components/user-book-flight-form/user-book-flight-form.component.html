@@ -1,36 +1,138 @@
-<div *ngIf="flight">
-    <form (ngSubmit)="bookFlight()" novalidate>
-        <h2>Book Flight</h2>
+<mat-stepper orientation="vertical" [linear]="true" #stepper>
+    <mat-step [stepControl]="passAmount">
+        <form [formGroup]="passAmount">
+            <div *ngIf="flight">
+                <mat-card class="flight-info-card" appearance="outlined">
+                    <mat-card-header>
+                        <mat-card-title>Book Flight No. {{ flight.flight_id }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div>
+                            <p><strong>Origin:</strong> {{ flight.origin }}</p>
+                            <p><strong>Destination:</strong> {{ flight.destination }}</p>
+                            <p><strong>Boarding:</strong> {{ flight.boarding_date }} - {{ flight.boarding_time }}</p>
+                            <p><strong>Landing:</strong> {{ flight.arrival_date }} - {{ flight.arrival_time }}</p>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <ng-template matStepLabel>Choose passengers amount</ng-template>
+            <mat-form-field>
+                <mat-label>amount</mat-label>
+                <mat-select formControlName="amount" class="count-select" placeholder="Passenger Count">
+                    @for (item of [1, 2, 3, 4, 5]; track item) {
+                        <mat-option [value]="item">{{ item }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="bookingForm" [completed]="passDetails.valid">
+        <!-- Loop through the FormArray -->
+        <form [formGroup]="bookingForm">
+            <ng-template matStepLabel>fill out passengers details</ng-template>
+            <div formArrayName="passDetails">
+                <div *ngFor="let passGroup of passDetails.controls; let i = index" [formGroupName]="i">
+                    <h3>Passenger {{ i + 1 }}</h3>
+                    <mat-form-field>
+                        <mat-label>Full Name</mat-label>
+                        <input matInput formControlName="full_name" placeholder="John Doe"/>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field>
+                        <mat-label>Passport Number</mat-label>
+                        <input matInput formControlName="passport_number" placeholder="123456789"/>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext [disabled]="passDetails.invalid">Next</button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="bookingForm" [completed]="passDetails.valid">
+        <!-- Loop through the FormArray -->
+        <form [formGroup]="bookingForm">
+            <ng-template matStepLabel>select luggage</ng-template>
+            <div formArrayName="passDetails">
+                <div *ngFor="let passGroup of passDetails.controls; let i = index" [formGroupName]="i">
+                    <!--                    <mat-form-field>-->
+                    <mat-card class="luggage-card" appearance="outlined">
+                        <div class="luggage-card-header">
+                            <mat-card-header>
+                                <mat-card-title>{{ passGroup?.value.full_name }}</mat-card-title>
+                            </mat-card-header>
+                            <mat-card-actions align="end">
+                                <button (click)="openChooseLuggageDialog(i)" mat-flat-button>
+                                    {{ hasLuggage(i) ? 'Manage' : 'Add' }} Luggage
+                                </button>
+                            </mat-card-actions>
+                        </div>
+                        <mat-card-content>
+                            <div *ngIf="hasLuggage(i)">
+                                <p>Total items: <b>{{ getTotalLuggage(i) }}</b></p>
+                                <p>Total weight: <b>{{ getTotalLuggageWeight(i) }}kg</b></p>
+                            </div>
+                            <p *ngIf="!hasLuggage(i)">
+                                Not added luggage yet, click the button if you want to change it.
+                            </p>
+                        </mat-card-content>
+                        <mat-card-footer class="luggage-card-footer">
+                            <mat-chip-set aria-label="Chihuahua traits">
+                                <mat-chip *ngFor="let luggage of getLuggageDetails(i)">
+                                    {{ luggage }}
+                                </mat-chip>
+                            </mat-chip-set>
+                        </mat-card-footer>
+                    </mat-card>
+                </div>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext [disabled]="passDetails.invalid">Next</button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Overview</ng-template>
+        <mat-card style="margin: 1rem;" class="flight-info-card" appearance="outlined">
+            <mat-card-header>
+                <mat-card-title>Flight Details</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div *ngIf="flight">
+                    <p><strong>Flight No.:</strong> {{ flight.flight_id }}, <strong>{{ flight.origin }}</strong> to
+                        <strong>{{ flight.destination }}</strong></p>
+                    <p><strong>Boarding:</strong> {{ flight.boarding_date }} - {{ flight.boarding_time }},
+                        <strong>Landing:</strong> {{ flight.arrival_date }} - {{ flight.arrival_time }}</p>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card style="margin: 1rem;" class="passenger-info-card" appearance="outlined"
+                  *ngFor="let passGroup of passDetails.controls; let i = index">
+            <mat-card-header>
+                <mat-card-title>Passenger {{ i + 1 }} Details</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p><strong>Name:</strong> {{ passGroup?.get('full_name')?.value }},
+                    <strong>Passport Number:</strong> {{ passGroup?.get('passport_number')?.value }}</p>
+                <b>Luggage:</b><br>
+                <div *ngIf="hasLuggage(i)">
+                    <span *ngFor="let luggage of getLuggageDetails(i); let j = index">
+                        {{ luggage }}{{ getLuggageDetails(i).length > j + 1 ? ',' : '.' }}
+                    </span>
+                </div>
+                <p *ngIf="!hasLuggage(i)">No luggage added yet.</p>
+            </mat-card-content>
+        </mat-card>
         <div>
-            <p>Origin:{{ flight.origin }} </p>
-            <p>Destination:{{ flight.destination }} </p>
-            <p>Boarding: {{ flight.boarding_date }} - {{ flight.boarding_time }} </p>
-            <p>Landing: {{ flight.arrival_date }} - {{ flight.arrival_time }}</p>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-flat-button (click)="bookFlight()">Book Flight</button>
         </div>
-        <mat-select [(value)]="munPass" class="count-select"
-                (valueChange)="declarePassengers($event)" placeholder="Passenger Count">
-            @for (item of [1, 2, 3, 4, 5]; track item) {
-                <mat-option [value]="item">{{ item }}</mat-option>
-            }
-        </mat-select>
-
-        <div class="pass-details"
-             *ngFor="let passenger of passenger_details; let i = index">
-            <p>
-                Passenger {{ i + 1 }}
-            </p>
-            <mat-form-field>
-                <mat-label for="full_name">Full name</mat-label>
-                <input name="full_name" [(ngModel)]="passenger_details[i].full_name" required matInput type="text"
-                       class="form-control" id="full_name"/>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label for="passport_number">Passport Number</mat-label>
-                <input name="passport_number" [(ngModel)]="passenger_details[i].passport_number" required matInput
-                       type="text" class="form-control" id="full_name"/>
-            </mat-form-field>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
-</div>
+    </mat-step>
+</mat-stepper>
