@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Destination, Flight } from "@types";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from "@angular/material/table";
@@ -11,7 +11,6 @@ import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatOptionModule } from "@angular/material/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { first, Subscription } from "rxjs";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";

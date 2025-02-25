@@ -1,5 +1,6 @@
 <h1 class="page-title">Manage Destinations</h1>
 <div class="table-container">
+    <button type="submit" class="btn btn-primary" [routerLink]="['/admin-destination/new']">Add Destination</button>
     <table *ngIf="destinations_service.destinationsData | async as destinations" mat-table [dataSource]="destinations"
            class="design-table">
         <!--- Note that these columns can be defined in any order.
@@ -47,5 +48,4 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <br/>
-    <button type="submit" class="btn btn-primary" [routerLink]="['/admin-destination/new']">Add Destination</button>
 </div>

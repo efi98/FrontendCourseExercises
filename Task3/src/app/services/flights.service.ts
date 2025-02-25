@@ -48,7 +48,6 @@ export class FlightsService {
         };
     }
 
-
     public get flight() {
         return (id: string): Observable<Flight | null> => {
             const flightDoc = doc(this.firestore, `flights/${id}`);

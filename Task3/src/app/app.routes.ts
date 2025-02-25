@@ -13,6 +13,8 @@ import { FlightDetailsComponent } from "./components/flight-details/flight-detai
 import { UserBookingDetailsComponent } from "./components/user-booking-details/user-booking-details.component";
 import { AdminFlightFormComponent } from "./components/admin-flight-form/app-admin-flight-form";
 import { AdminDestinationFormComponent } from "./components/admin-destination-form/admin-destination-form.component";
+import { AdminManageCouponComponent } from "./components/admin-manage-coupon/admin-manage-coupon.component";
+import { AdminCouponFormComponent } from "./components/admin-coupon-form/app-admin-coupon-form";
 
 export const routes: Routes = [
     {
@@ -28,6 +30,10 @@ export const routes: Routes = [
         component: AdminFlightFormComponent
     },
     {
+        path: "admin-manage-flights",
+        component: AdminManageFlightsComponent,
+    },
+    {
         path: "admin-destination/new",
         component: AdminDestinationFormComponent
     },
@@ -36,12 +42,20 @@ export const routes: Routes = [
         component: AdminDestinationFormComponent
     },
     {
-        path: "admin-manage-flights",
-        component: AdminManageFlightsComponent,
-    },
-    {
         path: "admin-manage-destinations",
         component: AdminManageDestinationsComponent,
+    },
+    {
+        path: "admin-coupon/new",
+        component: AdminCouponFormComponent
+    },
+    {
+        path: "admin-coupon/edit/:coupon_id",
+        component: AdminCouponFormComponent
+    },
+    {
+        path: "admin-manage-coupons",
+        component: AdminManageCouponComponent,
     },
     {
         path: "user-book-flight",

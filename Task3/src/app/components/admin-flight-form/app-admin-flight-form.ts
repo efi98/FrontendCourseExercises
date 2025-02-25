@@ -11,6 +11,8 @@ import { first, map, Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatRadioModule } from "@angular/material/radio";
 import { numOfSeatsPolicy, positiveNumberValidator } from "../../utilities/util";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     selector: "app-admin-flight-form",
@@ -18,6 +20,8 @@ import { numOfSeatsPolicy, positiveNumberValidator } from "../../utilities/util"
         CommonModule,
         MatFormFieldModule,
         MatRadioModule,
+        MatButtonModule,
+        MatIconModule,
         ReactiveFormsModule,
         MatSelectModule,
         MatInputModule,

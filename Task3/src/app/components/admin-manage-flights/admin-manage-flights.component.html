@@ -1,5 +1,6 @@
 <h1 class="page-title">Manage Flights</h1>
 <div class="table-container">
+    <button type="submit" class="btn btn-primary" [routerLink]="['/admin-flight/new']">Add Flight</button>
     <table mat-table [dataSource]="flights" class="design-table">
         <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
@@ -60,5 +61,4 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <br/>
-    <button type="submit" class="btn btn-primary" [routerLink]="['/admin-flight/new']">Add Flight</button>
 </div>

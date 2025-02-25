@@ -1,0 +1,68 @@
+<div class="table-container">
+    <h1>Manage Coupons</h1>
+    <button type="submit" class="btn btn-primary" [routerLink]="['/admin-coupon/new']">Add Coupon</button>
+
+    <table mat-table [dataSource]="coupons" class="design-table">
+        <ng-container matColumnDef="codeCoupon">
+            <th mat-header-cell *matHeaderCellDef> Code </th>
+            <td mat-cell *matCellDef="let coupon"> <pre>{{ coupon.codeCoupon }} </pre></td>
+        </ng-container>
+
+        <ng-container matColumnDef="discount">
+            <th mat-header-cell *matHeaderCellDef> Discount </th>
+            <td mat-cell *matCellDef="let coupon"> {{ coupon.discountPercentage }}% </td>
+        </ng-container>
+
+        <ng-container matColumnDef="remainingUses">
+            <th mat-header-cell *matHeaderCellDef> Remaining Uses </th>
+            <td mat-cell *matCellDef="let coupon"> {{ coupon.remainingUses }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let coupon"> {{ coupon.description }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="startDate">
+            <th mat-header-cell *matHeaderCellDef> Start Date </th>
+            <td mat-cell *matCellDef="let coupon"> {{ coupon.startDate | date: 'yyyy-MM-dd' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="endDate">
+            <th mat-header-cell *matHeaderCellDef> End Date </th>
+            <td mat-cell *matCellDef="let coupon"> {{ coupon.endDate | date: 'yyyy-MM-dd' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="deleted">
+            <th mat-header-cell *matHeaderCellDef> Deleted? </th>
+            <td mat-cell *matCellDef="let coupon"> {{ coupon.deleted ? 'Yes' : 'No' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let coupon">
+                <button mat-icon-button aria-label="Edit destination" class="icon"
+                        [routerLink]="['/admin-coupon/edit', coupon.id]">
+                    <mat-icon class="icon">edit</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="Destination Details" class="icon"
+                        (click)="deleteCoupon(coupon.id)">
+                    <mat-icon class="times">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button aria-label="Edit destination" class="icon"
+                        [routerLink]="['/admin-destination/edit', element.destination_id]">
+                    <mat-icon class="icon">edit</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="Destination Details" class="icon"
+                        [routerLink]="['/destination-details', element.destination_id]">
+                    <mat-icon class="icon">info</mat-icon>
+                </button>
+            </td>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

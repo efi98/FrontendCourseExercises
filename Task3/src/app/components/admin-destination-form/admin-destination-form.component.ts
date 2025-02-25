@@ -8,10 +8,13 @@ import { DestinationsService } from "../../services/destinations.service";
 import { Destination } from "@types";
 import { first, map, Subscription } from "rxjs";
 import { MatRadioModule } from "@angular/material/radio";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     selector: "app-admin-edit-destination",
-    imports: [ReactiveFormsModule, MatRadioModule, MatFormFieldModule, MatInputModule, RouterModule, CommonModule],
+    imports: [ReactiveFormsModule, MatButtonModule,
+        MatIconModule, MatRadioModule, MatFormFieldModule, MatInputModule, RouterModule, CommonModule],
 
     templateUrl: "./admin-destination-form.component.html",
     styleUrl: "./admin-destination-form.component.scss",

@@ -1,0 +1,87 @@
+<div>
+    <form [formGroup]="couponForm" (ngSubmit)="submitForm()" novalidate>
+        <h2 *ngIf="isEditMode">Edit Coupon {{ couponForm.get('codeCoupon')?.value }}</h2>
+        <h2 *ngIf="!isEditMode">New  Coupon</h2>
+
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label for="codeCoupon">Coupon Code:</mat-label>
+                <input required matInput class="form-control" id="codeCoupon" placeholder="DF34FG"
+                       formControlName="codeCoupon">
+            </mat-form-field>
+            <small *ngIf="couponForm.get('codeCoupon')?.invalid && couponForm.get('codeCoupon')?.touched">
+                Coupon code is required. and exact 6 chars
+            </small>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label for="startDate">Start Date:</mat-label>
+                <input required type="date" matInput class="form-control" id="startDate"
+                       formControlName="startDate">
+            </mat-form-field>
+            <small *ngIf="couponForm.get('startDate')?.invalid && couponForm.get('startDate')?.touched">
+                <small *ngIf="couponForm.get('startDate')?.hasError('required')">Start date is required.</small>
+            </small>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label for="endDate">End Date:</mat-label>
+                <input required type="date" matInput class="form-control" id="endDate"
+                       formControlName="endDate">
+            </mat-form-field>
+            <small *ngIf="couponForm.get('endDate')?.invalid && couponForm.get('endDate')?.touched">
+                <small *ngIf="couponForm.get('endDate')?.hasError('required')">End date is required.</small>
+                <small *ngIf="couponForm.get('endDate')?.hasError('endDateBeforeStartDate')">end date can't be BEFORE
+                    the start date</small>
+            </small>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label for="discountPercentage">Discount Percentage:</mat-label>
+                <input required matInput type="number" class="form-control" id="discountPercentage"
+                       formControlName="discountPercentage">
+            </mat-form-field>
+            <small *ngIf="couponForm.get('discountPercentage')?.invalid && couponForm.get('discountPercentage')?.touched">
+                <small *ngIf="couponForm.get('discountPercentage')?.hasError('required')">Discount is required.</small>
+                <small *ngIf="couponForm.get('discountPercentage')?.hasError('min')">Discount must be at least 1.</small>
+                <small *ngIf="couponForm.get('discountPercentage')?.hasError('max')">Discount must not exceed 99.</small>
+            </small>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label for="description">Description:</mat-label>
+                <input required matInput class="form-control" id="description"
+                       formControlName="description">
+            </mat-form-field>
+            <small *ngIf="couponForm.get('description')?.invalid && couponForm.get('description')?.touched">
+                Description is required.
+            </small>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label for="remainingUses">Remaining Uses:</mat-label>
+                <input required type="number" matInput class="form-control" id="remainingUses"
+                       formControlName="remainingUses">
+            </mat-form-field>
+            <small *ngIf="couponForm.get('remainingUses')?.invalid && couponForm.get('remainingUses')?.touched">
+                <small *ngIf="couponForm.get('remainingUses')?.hasError('required')">Remaining uses are required.</small>
+                <small *ngIf="couponForm.get('remainingUses')?.hasError('min')">Remaining uses must be a positive number.</small>
+            </small>
+        </div>
+
+        <div *ngIf="isEditMode" class="form-group">
+            <mat-label>Deleted</mat-label>
+            <mat-radio-group formControlName="deleted">
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <button type="submit" [disabled]="couponForm.invalid" mat-flat-button>Save</button>
+    </form>
+</div>
