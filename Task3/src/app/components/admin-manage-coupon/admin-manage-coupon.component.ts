@@ -6,11 +6,12 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Coupon } from "@types";
 import { CouponsService } from "../../services/coupons.service";
 import { Observable } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
     selector: 'app-admin-manage-coupons',
-    imports: [MatTableModule, RouterModule, MatIconModule, CommonModule],
+    imports: [MatTableModule, RouterModule, MatButtonModule, MatIconModule, CommonModule],
     templateUrl: './admin-manage-coupon.component.html',
     styleUrl: './admin-manage-coupon.component.scss',
     providers: [DatePipe],

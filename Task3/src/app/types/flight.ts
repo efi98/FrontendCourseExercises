@@ -5,10 +5,10 @@ export interface Flight {
     flight_name: string;
     boarding_date: string;
     boarding_time: string;
-    origin: string;
-    destination: string;
     arrival_date: string;
     arrival_time: string;
+    origin: string;
+    destination: string;
     status: Status;
     image_url: string;
     link: string;
