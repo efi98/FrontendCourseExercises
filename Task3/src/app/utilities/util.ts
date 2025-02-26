@@ -52,15 +52,7 @@ export function endDateValidator(control: AbstractControl): ValidationErrors | n
 }
 
 export function convertTimestampToDate(timestamp: { seconds: number, nanoseconds: number }): Date {
-    let date: Date;
-    date = new Date(timestamp.seconds * 1000);
-
-    // Use Angular DatePipe to format the date as 'yyyy-MM-dd'
-    const datePipe = new DatePipe('en-US');
-    const formattedDate = datePipe.transform(date, 'yyyy-MM-dd') ?? '';
-
-    // Return both the Date object and formatted date string
-    return date;
+    return new Date(timestamp.seconds * 1000);
 }
 
 
@@ -70,6 +62,5 @@ export function convertDateToFormattedDate(date: Date): string {
     const datePipe = new DatePipe('en-US');
     const formattedDate = datePipe.transform(date, 'yyyy-MM-dd') ?? '';
 
-    // Return both the Date object and formatted date string
     return formattedDate;
 }
