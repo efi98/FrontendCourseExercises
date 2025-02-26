@@ -1,6 +1,14 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnDestroy, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import {
+    FormArray,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators
+} from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
@@ -17,6 +25,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialog } from "@angular/material/dialog";
 import { DialogChooseLuggageComponent } from "../dialog-choose-luggage/dialog-choose-luggage.component";
 import { luggageWeights } from "../../utilities/util";
+import { CouponsService } from "../../services/coupons.service";
 
 @Component({
     selector: "app-user-book-flight-form",
@@ -35,15 +44,17 @@ import { luggageWeights } from "../../utilities/util";
     styleUrl: "./user-book-flight-form.component.scss",
 })
 export class UserBookFlightFormComponent implements OnInit, OnDestroy {
-    flight?: Flight;
+    flight!: Flight;
     //
     bookings_service = inject(BookingsService);
     flight_service = inject(FlightsService);
+    couponService = inject(CouponsService);
     flight_subscription!: Subscription;
     //
     bookings_subscription!: Subscription;
     all_flights: Flight[] = [];
     bookingForm!: FormGroup;
+    couponPercentage = 0;
     readonly dialog = inject(MatDialog);
     private _formBuilder = inject(FormBuilder);
 
@@ -57,6 +68,10 @@ export class UserBookFlightFormComponent implements OnInit, OnDestroy {
 
     get passDetails() {
         return this.bookingForm.get('passDetails') as FormArray;
+    }
+
+    get codeCoupon() {
+        return this.bookingForm.get('codeCoupon') as FormControl;
     }
 
     hasLuggage(index: number): boolean {
@@ -81,16 +96,9 @@ export class UserBookFlightFormComponent implements OnInit, OnDestroy {
         const luggageDetails: string[] = [];
 
         // Check for each luggage type and add chips if greater than 0
-        if (luggage.cabin > 0) {
-            luggageDetails.push(`${luggage.cabin}x ${luggageWeights.cabin}kg`);
-        }
-        if (luggage.checked > 0) {
-            luggageDetails.push(`${luggage.checked}x ${luggageWeights.checked}kg`);
-        }
-        if (luggage.heavy > 0) {
-            luggageDetails.push(`${luggage.heavy}x ${luggageWeights.heavy}kg`);
-        }
-
+        if (luggage.cabin > 0) luggageDetails.push(`${luggage.cabin}x ${luggageWeights.cabin}kg`);
+        if (luggage.checked > 0) luggageDetails.push(`${luggage.checked}x ${luggageWeights.checked}kg`);
+        if (luggage.heavy > 0) luggageDetails.push(`${luggage.heavy}x ${luggageWeights.heavy}kg`);
         return luggageDetails;
     }
 
@@ -99,7 +107,8 @@ export class UserBookFlightFormComponent implements OnInit, OnDestroy {
             passAmount: this._formBuilder.group({
                 amount: [1, Validators.required]
             }),
-            passDetails: this._formBuilder.array([])
+            passDetails: this._formBuilder.array([]),
+            codeCoupon: [null, [], [this.couponService.couponAsyncValidator()]]
         });
 
         this.updatePassengerArray(this.bookingForm.get('passAmount')?.value.amount || 1);
@@ -111,8 +120,8 @@ export class UserBookFlightFormComponent implements OnInit, OnDestroy {
 
     createPassengerForm(): FormGroup {
         return this._formBuilder.group({
-            full_name: [null, Validators.required],
-            passport_number: [null, Validators.required],
+            full_name: ['null', Validators.required],
+            passport_number: ['null', Validators.required],
             Luggage: this._formBuilder.group({
                 cabin: [0, Validators.required],
                 checked: [0, Validators.required],
@@ -124,13 +133,8 @@ export class UserBookFlightFormComponent implements OnInit, OnDestroy {
     updatePassengerArray(newCount: number): void {
         const passDetails = this.bookingForm.get('passDetails') as FormArray;
 
-        while (passDetails.length < newCount) {
-            passDetails.push(this.createPassengerForm());
-        }
-
-        while (passDetails.length > newCount) {
-            passDetails.removeAt(passDetails.length - 1);
-        }
+        while (passDetails.length < newCount) passDetails.push(this.createPassengerForm());
+        while (passDetails.length > newCount) passDetails.removeAt(passDetails.length - 1);
     }
 
     ngOnDestroy(): void {
@@ -155,6 +159,10 @@ export class UserBookFlightFormComponent implements OnInit, OnDestroy {
             }
             this.flight = dest;
         });
+
+        this.codeCoupon.valueChanges.pipe(debounceTime(300)).subscribe(value => {
+            this.onCouponChange(value);
+        })
     }
 
     async bookFlight() {
@@ -179,7 +187,11 @@ export class UserBookFlightFormComponent implements OnInit, OnDestroy {
             booking_id: "", // The booking_id will be generated by Firebase
             flight: this.flight!,
             passengers,
+            codeCoupon: this.codeCoupon.value || null,
+            totalPrice: this.getFlightPrice()
         });
+
+        await this.couponService.updateCouponUsage(this.codeCoupon.value);
 
         alert("Flight booked successfully!");
         window.location.reload();
@@ -202,5 +214,27 @@ export class UserBookFlightFormComponent implements OnInit, OnDestroy {
                 this.passDetails.at(index)?.get('Luggage')?.setValue(result);
             }
         });
+    }
+
+    onCouponChange(codeCoupon: any): void {
+        const isValid = this.bookingForm.get("codeCoupon")?.valid;
+        if (!codeCoupon || !isValid) return;
+
+        this.couponService.validateCoupon(codeCoupon).then((result) => {
+            if (result.error) {
+                this.couponPercentage = 0;
+                console.error(result.error);
+            } else if (result.coupon) {
+                this.couponPercentage = result.coupon.discountPercentage;
+            }
+        });
+    }
+
+    getFlightPrice(): number {
+        const basePrice = this.flight.price * this.passAmount.get('amount')?.value;
+        if (this.codeCoupon.value) {
+            return basePrice * (this.couponPercentage / 100);
+        }
+        return basePrice;
     }
 }

@@ -98,6 +98,25 @@
             </div>
         </form>
     </mat-step>
+
+    <mat-step [stepControl]="bookingForm">
+
+        <form [formGroup]="bookingForm">
+            <ng-template matStepLabel>coupon</ng-template>
+            <mat-form-field>
+                <mat-label>code Coupon</mat-label>
+                <input matInput formControlName="codeCoupon" placeholder="AD43Gd"/>
+                <mat-error *ngIf="bookingForm.get('codeCoupon')?.hasError('couponInvalid')">
+                    {{ bookingForm.get('codeCoupon')?.errors?.['couponInvalid'] }}
+                </mat-error>
+            </mat-form-field>
+        </form>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext [disabled]="codeCoupon.invalid">Next</button>
+        </div>
+    </mat-step>
+
     <mat-step>
         <ng-template matStepLabel>Overview</ng-template>
         <mat-card style="margin: 1rem;" class="flight-info-card" appearance="outlined">
@@ -110,6 +129,7 @@
                         <strong>{{ flight.destination }}</strong></p>
                     <p><strong>Boarding:</strong> {{ flight.boarding_date }} - {{ flight.boarding_time }},
                         <strong>Landing:</strong> {{ flight.arrival_date }} - {{ flight.arrival_time }}</p>
+                    <p><strong>Price:</strong> {{getFlightPrice()}}$</p>
                 </div>
             </mat-card-content>
         </mat-card>

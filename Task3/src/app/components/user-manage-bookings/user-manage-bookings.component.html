@@ -18,7 +18,8 @@
                 <p>Destination: {{ element.flight.destination }} {{ element.flight.arrival_date }} {{
                         element.flight.arrival_time
                     }}</p>
-                <p>Passengers: {{ element.passengers.length }}</p>
+                <p>Passengers: {{ element.passengers.length }}</p> <p>
+                Price:&nbsp;<strong>{{ element.totalPrice }}</strong>&nbsp;$</p>
                 <button mat-stroked-button aria-label="View"
                         [routerLink]="['/user-booking-details', element.booking_id]">
                     View

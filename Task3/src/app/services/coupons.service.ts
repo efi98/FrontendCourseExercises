@@ -15,6 +15,7 @@ import {
 import { catchError, map, Observable, of } from 'rxjs';
 import { Coupon } from "@types";
 import { convertTimestampToDate } from '../utilities/util';
+import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root',
@@ -93,47 +94,57 @@ export class CouponsService {
 
     // Validate a coupon code (check if it exists, is valid, and not expired)
     async validateCoupon(codeCoupon: string): Promise<{ coupon?: Coupon; error?: string }> {
-        const couponRef = doc(this.firestore, `coupons/${codeCoupon}`);
-        const couponSnap = await getDoc(couponRef);
+        const couponsRef = collection(this.firestore, "coupons");
+        const q = query(couponsRef, where("codeCoupon", "==", codeCoupon));
+        const querySnapshot = await getDocs(q);
 
-        if (!couponSnap.exists()) {
-            return {error: "The code entered is invalid."}; // Coupon not found
+        if (querySnapshot.empty) {
+            return { error: "The code entered is invalid." }; // Coupon not found
         }
 
-        const coupon = couponSnap.data() as Coupon;
+        const coupon = querySnapshot.docs[0].data() as Coupon;
         const now = new Date();
 
-        if (now < coupon.startDate) {
+        if (now < convertTimestampToDate(coupon.startDate as any)) {
             return {error: "The code entered is not yet valid."}; // Coupon not started
         }
 
-        if (now > coupon.endDate) {
+        if (now > convertTimestampToDate(coupon.endDate as any)) {
             return {error: "The code entered is expired."}; // Coupon expired
         }
 
         if (coupon.remainingUses <= 0) {
-            return {error: "The code entered has reached its usage limit."}; // No remaining uses
+            return { error: "The code entered has reached its usage limit." }; // No remaining uses
         }
 
-        return {coupon};
+        return { coupon };
     }
 
+    couponAsyncValidator(): AsyncValidatorFn {
+        return (control: AbstractControl): Observable<ValidationErrors | null> | Promise<ValidationErrors | null> => {
+            if (!control.value) return Promise.resolve(null);
 
-    // Apply a coupon (calculate the new price)
-    applyCoupon(coupon: Coupon, totalPrice: number): number {
-        const discount = (coupon.discountPercentage / 100) * totalPrice;
-        return totalPrice - discount;
+            return this.validateCoupon(control.value).then((result) => {
+                if (result.error) {
+                    return { couponInvalid: result.error }; // Return the error message in form control
+                }
+                return null;
+            });
+        };
     }
 
     // Update coupon usage (reduce remaining uses by 1)
     async updateCouponUsage(codeCoupon: string): Promise<void> {
-        const couponRef = doc(this.firestore, `coupons/${codeCoupon}`);
-        const couponSnap = await getDoc(couponRef);
+        const couponsRef = collection(this.firestore, "coupons");
+        const q = query(couponsRef, where("codeCoupon", "==", codeCoupon));
+        const querySnapshot = await getDocs(q);
 
-        if (couponSnap.exists()) {
-            const coupon = couponSnap.data() as Coupon;
+        if (!querySnapshot.empty) {
+            const couponDoc = querySnapshot.docs[0]; // Assuming codeCoupon is unique
+            const coupon = couponDoc.data() as Coupon;
+
             if (coupon.remainingUses > 0) {
-                await updateDoc(couponRef, {
+                await updateDoc(doc(this.couponsCollection, couponDoc.id), {
                     remainingUses: coupon.remainingUses - 1,
                 });
             }

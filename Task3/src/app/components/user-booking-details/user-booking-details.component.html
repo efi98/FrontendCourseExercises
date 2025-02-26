@@ -10,6 +10,8 @@
             <p>
                 destination:&nbsp;<strong>{{ booking.flight.destination }}</strong>&nbsp;({{ booking.flight.arrival_date }}
                 ,&nbsp;{{ booking.flight.arrival_time }})</p>
+            <p>
+                Price:&nbsp;<strong>{{ booking.totalPrice }}</strong>&nbsp;$</p>
             <div style="margin-left: 1rem;" *ngFor="let passenger of booking?.passengers; let i = index">
                 <br *ngIf="i">
                 <h3 style="text-decoration: underline; font-weight: 200">Passenger&nbsp;{{ i + 1 }}&nbsp;Details:</h3>
