@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Add luggage - {{ data.name }}</h2>
+
+<mat-dialog-content style="display: flex; flex-direction: column;">
+
+    <mat-form-field>
+        <mat-label>Cabin Baggage (8kg)</mat-label>
+        <input matInput type="number" [(ngModel)]="data.luggage.cabin" (ngModelChange)="onLuggageChange()" min="0"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Checked Baggage (23kg)</mat-label>
+        <input matInput type="number" [(ngModel)]="data.luggage.checked" (ngModelChange)="onLuggageChange()" min="0"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Heavy Baggage (32kg)</mat-label>
+        <input matInput type="number" [(ngModel)]="data.luggage.heavy" (ngModelChange)="onLuggageChange()" min="0"/>
+    </mat-form-field>
+
+</mat-dialog-content>
+@if (isSaveDisabled) {
+    <small style="padding: 0 10px;">You cannot have more than 9 items in total.</small>
+}
+<mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [disabled]="isSaveDisabled" (click)="onSaveClick()" cdkFocusInitial>Save Changes</button>
+</mat-dialog-actions>

@@ -1,0 +1,64 @@
+<h1 class="page-title">Manage Flights</h1>
+<div class="table-container">
+    <table mat-table [dataSource]="flights" class="design-table">
+        <ng-container matColumnDef="flightName">
+            <th mat-header-cell *matHeaderCellDef>Flight Name</th>
+            <td mat-cell *matCellDef="let element"> {{ element.flight_name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="boardingDateTime">
+            <th mat-header-cell *matHeaderCellDef>Boarding Date-Time</th>
+            <td mat-cell *matCellDef="let element"> {{ element.boarding_date }}, {{ element.boarding_time }}</td>
+        </ng-container>
+        <ng-container matColumnDef="arrivalDateTime">
+            <th mat-header-cell *matHeaderCellDef>Arrival Date-Time</th>
+            <td mat-cell *matCellDef="let element"> {{ element.arrival_date }}, {{ element.arrival_time }}</td>
+        </ng-container>
+        <ng-container matColumnDef="origin">
+            <th mat-header-cell *matHeaderCellDef>Origin</th>
+            <td mat-cell *matCellDef="let element"> {{ element.origin }}</td>
+        </ng-container>
+        <ng-container matColumnDef="destination">
+            <th mat-header-cell *matHeaderCellDef>Destination</th>
+            <td mat-cell *matCellDef="let element"> {{ element.destination }}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td [style]="element.status ? 'color: green;' : 'color: red;'" mat-cell *matCellDef="let element"> {{ element.status ? 'Active' : 'inactive' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="airportDetails">
+            <th mat-header-cell *matHeaderCellDef>Airport details</th>
+            <td mat-cell *matCellDef="let element"><a mat-button target="_blank" [href]="element.link">{{ element.airportName }}</a></td>
+        </ng-container>
+        <ng-container matColumnDef="numberOfPassengers">
+            <th mat-header-cell *matHeaderCellDef>Seats</th>
+            <td mat-cell *matCellDef="let element"> {{ element.numberOfPassengers }}</td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Price</th>
+            <td mat-cell *matCellDef="let element"> {{ element.price }}$</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button aria-label="Edit Flight" class="icon"
+                        [routerLink]="['/admin-flight/edit', element.flight_id]">
+                    <mat-icon class="icon">edit</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="Flight Details" class="icon"
+                        [routerLink]="['/flight-details', element.flight_id]">
+                    <mat-icon class="icon">info</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <br/>
+</div>
+<div class="new-record-btn">
+    <button mat-fab aria-label="Example icon button with a delete icon">
+        <mat-icon [routerLink]="['/admin-flight/new']">add</mat-icon>
+    </button>
+</div>

@@ -1,0 +1,38 @@
+@if (!expandedMode) {
+    <mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+            <input datePickerFormat="DD/MM/YYYY" matStartDate formControlName="start" placeholder="Start date">
+            <input datePickerFormat="DD/MM/YYYY" matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker disabled="false"></mat-date-range-picker>
+    </mat-form-field>
+}
+@if (expandedMode) {
+    <div class="month-picker-group" [formGroup]="rangeMonth">
+        <mat-form-field>
+            <mat-label>start:</mat-label>
+            <input matInput [max]="rangeMonth.get('end')?.value?.toDate()" [matDatepicker]="dpS" formControlName="start">
+            <mat-hint>MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="dpS"></mat-datepicker-toggle>
+            <mat-datepicker #dpS
+                            startView="multi-year"
+                            (monthSelected)="setMonthAndYear($event, dpS, 'start')"
+                            panelClass="example-month-picker">
+            </mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>End:</mat-label>
+            <input matInput [min]="rangeMonth.get('start')?.value?.toDate()" [matDatepicker]="dpE" formControlName="end">
+            <mat-hint>MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="dpE"></mat-datepicker-toggle>
+            <mat-datepicker #dpE
+                            startView="multi-year"
+                            (monthSelected)="setMonthAndYear($event, dpE, 'end')"
+                            panelClass="example-month-picker">
+            </mat-datepicker>
+        </mat-form-field>
+    </div>
+}

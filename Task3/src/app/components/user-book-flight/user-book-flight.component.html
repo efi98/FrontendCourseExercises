@@ -1,0 +1,87 @@
+<div class="table-container">
+    <div *ngIf="displayFilters" class="search-section">
+        <form [formGroup]="filterForm" class="search-container">
+            <div style="margin-bottom:.5rem; width: 200px;gap:1rem; display: flex; flex-direction:column;">
+                <mat-form-field>
+                    <mat-label>Origin</mat-label>
+                    <mat-select formControlName="origin">
+                        <mat-option>--</mat-option>
+                        @for (origin of all_destinations; track origin) {
+                            <mat-option [value]="origin">{{origin.destination_name}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>destination</mat-label>
+                    <mat-select formControlName="destination">
+                        <mat-option>--</mat-option>
+                        @for (destination of all_destinations; track destination) {
+                            <mat-option [value]="destination">{{destination.destination_name}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="date-filter">
+                <mat-button-toggle-group (change)="setModeVal($event)" value="false" name="expandedMode"
+                                         aria-label="Expanded Mode">
+                    <mat-button-toggle value="false">Exact Dates</mat-button-toggle>
+                    <mat-button-toggle value="true">Expanded search</mat-button-toggle>
+                </mat-button-toggle-group>
+
+                <app-date-picker [expandedMode]="expandedMode"
+                                 (onDateRangeChanged)="filterFlightsByDateRange($event)">
+                </app-date-picker>
+            </div>
+        </form>
+
+        <button mat-stroked-button (click)="showAll()">
+            Clear filters
+        </button>
+    </div>
+    <div *ngIf="filtered_flights.length === 0" class="no-results">
+        No flights found with the selected filters. Change or reset the filters to see flights.
+    </div>
+    <table *ngIf="filtered_flights.length > 0" mat-table [dataSource]="filtered_flights" class="design-table">
+        <ng-container matColumnDef="flightName">
+            <th mat-header-cell *matHeaderCellDef>Flight Name</th>
+            <td mat-cell *matCellDef="let element"> {{ element.flight_name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="boardingDateTime">
+            <th mat-header-cell *matHeaderCellDef>Boarding Date-Time</th>
+            <td mat-cell *matCellDef="let element"> {{ element.boarding_date }}, {{element.boarding_time}}</td>
+        </ng-container>
+        <ng-container matColumnDef="arrivalDateTime">
+            <th mat-header-cell *matHeaderCellDef>Arrival Date-Time</th>
+            <td mat-cell *matCellDef="let element"> {{ element.arrival_date }}, {{element.arrival_time}}</td>
+        </ng-container>
+        <ng-container matColumnDef="origin">
+            <th mat-header-cell *matHeaderCellDef>Origin</th>
+            <td mat-cell *matCellDef="let element"> {{ element.origin }}</td>
+        </ng-container>
+        <ng-container matColumnDef="destination">
+            <th mat-header-cell *matHeaderCellDef>Destination</th>
+            <td mat-cell *matCellDef="let element"> {{ element.destination }}</td>
+        </ng-container>
+        <ng-container matColumnDef="airportDetails">
+            <th mat-header-cell *matHeaderCellDef>Airport details</th>
+            <td mat-cell *matCellDef="let element"><a mat-button target="_blank" [href]="element.link">{{ element.airportName }}</a></td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let element"> <b>{{ element.price }}</b> $ </td>
+        </ng-container>
+        <ng-container matColumnDef="book">
+            <th mat-header-cell *matHeaderCellDef>Book</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button aria-label="Book flight" class="icon"
+                        [routerLink]="['/user-book-flight-form', element.flight_id]">
+                    <mat-icon class="icon">book</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

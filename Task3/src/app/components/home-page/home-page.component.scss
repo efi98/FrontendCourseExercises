@@ -1,0 +1,24 @@
+.table-container {
+
+}
+
+.booking-card-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.design-table {
+  padding: 0 1rem;
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+.icon {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+th {
+  font-weight: bold;
+}

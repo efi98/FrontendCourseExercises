@@ -1,0 +1,39 @@
+<div class="table-container">
+
+    <h1>Last Minute Flights</h1>
+    <div class="booking-card-container">
+        <ng-container *ngIf="(last_minute_flights | async) as last_minute_flights">
+            <ng-container *ngIf="last_minute_flights.length; else defaultMessage">
+                @for (flight of last_minute_flights; track flight) {
+                    <mat-card class="flight-info-card" appearance="outlined"
+                              style="background-image: url({{flight.image_url}});background-size: cover;">
+                        <mat-card-header class="flight-card-header">
+                            <mat-card-title
+                                    [style]="'backdrop-filter: blur(5px);color: #ffffff'">{{ flight.destination }}
+                            </mat-card-title>
+                            <mat-card-subtitle
+                                    [style]="'backdrop-filter: blur(10px);color: #ffffff'">{{ flight.boarding_date }}
+                            </mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-content [class]="'stroked-text'"
+                                          [style]="'backdrop-filter: blur(1px);color: #ffffff;font-size: 20px;'">
+                            <p><b>{{ flight.price }}</b>$</p>
+                        </mat-card-content>
+                        <mat-card-footer>
+                            <mat-card-actions>
+                                <button [routerLink]="['/user-book-flight-form', flight.flight_id]" [style]="'background: #fff;'" mat-button>Book flight</button>
+                            </mat-card-actions>
+                        </mat-card-footer>
+                    </mat-card>
+                }
+            </ng-container>
+        </ng-container>
+    </div>
+
+    <ng-template #defaultMessage>
+        <p>No Flights for next week...</p>
+    </ng-template>
+    <h1>Find Flight</h1>
+    <app-user-book-flight [displayFilters]="false"></app-user-book-flight>
+    <br/>
+</div>

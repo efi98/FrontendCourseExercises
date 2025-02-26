@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
-import { Destination } from "../types";
 import { map, Observable } from "rxjs";
 import { collection, collectionData, deleteDoc, doc, Firestore, setDoc } from "@angular/fire/firestore";
+import { Destination } from "@types";
 
 @Injectable({
   providedIn: "root",

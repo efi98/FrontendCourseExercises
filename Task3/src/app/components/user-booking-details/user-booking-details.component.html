@@ -1,0 +1,30 @@
+<div *ngIf="booking">
+    <h2>Booking Details</h2>
+    <mat-card class="flight-info-card" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>Booking ID: {{ booking.booking_id }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>origin:&nbsp;<strong>{{ booking.flight.origin }}</strong>&nbsp;({{ booking.flight.boarding_date }}
+                ,&nbsp;{{ booking.flight.boarding_time }})&nbsp;</p>
+            <p>
+                destination:&nbsp;<strong>{{ booking.flight.destination }}</strong>&nbsp;({{ booking.flight.arrival_date }}
+                ,&nbsp;{{ booking.flight.arrival_time }})</p>
+            <p>
+                Price:&nbsp;<strong>{{ booking.totalPrice }}</strong>&nbsp;$</p>
+            <div style="margin-left: 1rem;" *ngFor="let passenger of booking?.passengers; let i = index">
+                <br *ngIf="i">
+                <h3 style="text-decoration: underline; font-weight: 200">Passenger&nbsp;{{ i + 1 }}&nbsp;Details:</h3>
+                <p><strong>Name:&nbsp;</strong>{{ passenger.full_name }}</p>
+                <p><strong>Passport Number:&nbsp;</strong>{{ passenger.passport_number }}</p>
+                <div><strong>Luggage:&nbsp;</strong><span
+                        *ngIf="!getLuggage(passenger).length">No luggage added yet.</span>
+                    <span *ngFor="let luggage of getLuggage(passenger); let i = index">{{ luggage }}{{ getLuggage(passenger).length > i + 1 ? ',&nbsp;' : '.' }}</span>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-footer [style]="'padding: 0.7rem'" class="luggage-card-footer">
+            <button mat-stroked-button [routerLink]="['/user-manage-bookings']">Back</button>
+        </mat-card-footer>
+    </mat-card>
+</div>
