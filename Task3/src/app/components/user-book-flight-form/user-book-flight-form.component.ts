@@ -120,8 +120,8 @@ export class UserBookFlightFormComponent implements OnInit, OnDestroy {
 
     createPassengerForm(): FormGroup {
         return this._formBuilder.group({
-            full_name: ['null', Validators.required],
-            passport_number: ['null', Validators.required],
+            full_name: [null, Validators.required],
+            passport_number: [null, Validators.required],
             Luggage: this._formBuilder.group({
                 cabin: [0, Validators.required],
                 checked: [0, Validators.required],

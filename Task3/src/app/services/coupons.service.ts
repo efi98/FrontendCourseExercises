@@ -117,6 +117,10 @@ export class CouponsService {
             return { error: "The code entered has reached its usage limit." }; // No remaining uses
         }
 
+        if (coupon.deleted) {
+            return { error: "The code entered it not available." }; // No remaining uses
+        }
+
         return { coupon };
     }
 
