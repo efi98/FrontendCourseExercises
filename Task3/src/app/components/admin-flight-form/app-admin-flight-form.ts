@@ -48,7 +48,7 @@ export class AdminFlightFormComponent {
     ) {
         this.flightForm = this.formBuilder.group(
             {
-                // destonation name has to be filled in
+                flight_name: ["", Validators.required],
                 origin: ["", Validators.required],
                 destination: ["", Validators.required],
                 boarding_date: ["", Validators.required],
@@ -57,7 +57,7 @@ export class AdminFlightFormComponent {
                 arrival_time: ["", Validators.required],
                 price: [null, [Validators.required, positiveNumberValidator]],
                 numberOfPassengers: ["", [Validators.required, Validators.min(numOfSeatsPolicy.min), Validators.max(numOfSeatsPolicy.max)]],
-                status: [null, Validators.required]
+                status: [true, Validators.required]
             },
             {
                 validators: [
@@ -67,6 +67,10 @@ export class AdminFlightFormComponent {
                 ],
             }
         );
+
+        this.flightForm.valueChanges.subscribe(data=> {
+            console.log(data, this.flightForm);
+        });
     }
 
     ngOnDestroy(): void {

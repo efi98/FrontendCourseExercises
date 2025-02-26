@@ -11,7 +11,6 @@ export interface Flight {
     destination: string;
     status: Status;
     image_url: string;
-    link: string;
     airportName: string;
     airportWebsite: string;
     numberOfPassengers: number;

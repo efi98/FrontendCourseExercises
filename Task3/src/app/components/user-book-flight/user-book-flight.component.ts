@@ -34,7 +34,7 @@ export class UserBookFlightComponent implements OnInit, OnDestroy {
     all_destinations: Destination[] = [];
     filterForm!: FormGroup;
     expandedMode: boolean = false;
-    displayedColumns: string[] = ["flight_id", "origin", "destination", "boarding_date", "boarding_time", "arrival_date", "arrival_time", "price", "book",];
+    displayedColumns: string[] = ["flightName", "boardingDateTime", "arrivalDateTime", "origin", "destination", 'airportDetails', "price", "book",];
     private flightsService = inject(FlightsService);
     private destinationsService = inject(DestinationsService);
     private fb = inject(FormBuilder);

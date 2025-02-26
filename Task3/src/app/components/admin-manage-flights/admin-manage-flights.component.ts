@@ -19,6 +19,9 @@ export class AdminManageFlightsComponent {
         'origin',
         'destination',
         'status',
+        'airportDetails',
+        'numberOfPassengers',
+        'price',
         'actions'
     ];
     flights_service = inject(FlightsService);

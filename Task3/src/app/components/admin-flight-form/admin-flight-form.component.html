@@ -1,7 +1,20 @@
 <div>
     <form [formGroup]="flightForm" (ngSubmit)="submitForm()" novalidate>
-        <h2 *ngIf="isEditMode">Edit Flight {{ flight?.flight_id }}</h2>
+        <h2 *ngIf="isEditMode">Edit Flight {{ flight?.flight_name }}</h2>
         <h2 *ngIf="!isEditMode">New Flight</h2>
+
+        <div class="form-group">
+            <mat-form-field>
+                <mat-label for="flight_name">Flight name</mat-label>
+                <input required matInput class="form-control" id="flight_name" placeholder="Flight 644"
+                       formControlName="flight_name">
+            </mat-form-field>
+            <small
+                    *ngIf="flightForm.get('flight_name')?.hasError('required') && flightForm.get('flight_name')?.touched">
+                Flight name is required
+            </small>
+        </div>
+
         <div class="form-group">
             <mat-form-field>
                 <mat-label for="origin">Origin</mat-label>
@@ -119,18 +132,18 @@
             </small>
             <small
                     *ngIf="flightForm.get('numberOfPassengers')?.hasError('min') && flightForm.get('numberOfPassengers')?.touched">
-                Number of passengers must be {{numOfSeatsPolicy.min}} and above
+                Number of passengers must be {{ numOfSeatsPolicy.min }} and above
             </small>
             <small
                     *ngIf="flightForm.get('numberOfPassengers')?.hasError('max') && flightForm.get('numberOfPassengers')?.touched">
-                Number of passengers cannot exceed {{numOfSeatsPolicy.max}}
+                Number of passengers cannot exceed {{ numOfSeatsPolicy.max }}
             </small>
         </div>
-        <div class="form-group">
+        <div *ngIf="isEditMode" class="form-group">
             <mat-label>Status</mat-label>
             <mat-radio-group formControlName="status">
-                <mat-radio-button [value]="0">Active</mat-radio-button>
-                <mat-radio-button [value]="1">In Active</mat-radio-button>
+                <mat-radio-button [value]="false">Inactive</mat-radio-button>
+                <mat-radio-button [value]="true">Active</mat-radio-button>
             </mat-radio-group>
             <small *ngIf="flightForm.get('status')?.hasError('required') && flightForm.get('status')?.touched">
                 Status is required
