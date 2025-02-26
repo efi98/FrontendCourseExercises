@@ -5,73 +5,43 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from "@angular/material/table";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { RouterModule } from "@angular/router";
-import { FlightsService } from "../../services/flights.service";
-import { DestinationsService } from "../../services/destinations.service";
 import { CommonModule } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatOptionModule } from "@angular/material/core";
-import { first, Subscription } from "rxjs";
+import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { first, Subscription } from "rxjs";
+import { FlightsService } from "../../services/flights.service";
+import { DestinationsService } from "../../services/destinations.service";
 import { isValidDate, strToBool } from "../../utilities/util";
 import { DatePickerComponent } from "../date-picker/date-picker.component";
 
 @Component({
     selector: "app-user-book-flight",
-    imports: [
-        MatButtonToggleModule,
-        MatTableModule,
-        RouterModule,
-        MatIconModule,
-        CommonModule,
-        MatSelectModule,
-        MatFormFieldModule,
-        MatDatepickerModule,
-        MatOptionModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        FormsModule,
-        DatePickerComponent,
-    ],
+    imports: [MatButtonToggleModule, MatTableModule, RouterModule, MatIconModule, CommonModule, MatSelectModule, MatFormFieldModule, MatButtonModule, MatDatepickerModule, MatOptionModule, MatInputModule, ReactiveFormsModule, FormsModule, DatePickerComponent,],
     templateUrl: "./user-book-flight.component.html",
     styleUrl: "./user-book-flight.component.scss",
 })
 export class UserBookFlightComponent implements OnInit, OnDestroy {
     @Input() displayFilters = true;
     @ViewChild(DatePickerComponent) datePickerComponent!: DatePickerComponent;
+    flightsSubscription!: Subscription;
+    destinationsSubscription!: Subscription;
+    all_flights: Flight[] = [];
+    filtered_flights: Flight[] = [];
+    all_destinations: Destination[] = [];
+    filterForm!: FormGroup;
+    expandedMode: boolean = false;
+    displayedColumns: string[] = ["flight_id", "origin", "destination", "boarding_date", "boarding_time", "arrival_date", "arrival_time", "price", "book",];
     private flightsService = inject(FlightsService);
     private destinationsService = inject(DestinationsService);
     private fb = inject(FormBuilder);
 
-    flightsSubscription!: Subscription;
-    destinationsSubscription!: Subscription;
-
-    all_flights: Flight[] = [];
-    filtered_flights: Flight[] = [];
-    all_destinations: Destination[] = [];
-
-    filterForm!: FormGroup;
-    expandedMode: boolean = false;
-
-    displayedColumns: string[] = [
-        "flight_id",
-        "origin",
-        "destination",
-        "boarding_date",
-        "boarding_time",
-        "arrival_date",
-        "arrival_time",
-        "price",
-        "book",
-    ];
-
     ngOnInit(): void {
         this.filterForm = this.fb.group({
-            origin: [null],
-            destination: [null],
-            startDate: [null],
-            endDate: [null]
+            origin: [null], destination: [null], startDate: [null], endDate: [null]
         });
 
         this.flightsSubscription = this.flightsService.flights.subscribe((flights) => {
@@ -79,11 +49,9 @@ export class UserBookFlightComponent implements OnInit, OnDestroy {
             this.filtered_flights = [...flights]; // Initialize the table with all flights
         });
 
-        this.destinationsSubscription = this.destinationsService.destinationsData.subscribe(
-            (destinations) => {
-                this.all_destinations = destinations;
-            }
-        );
+        this.destinationsSubscription = this.destinationsService.destinationsData.subscribe((destinations) => {
+            this.all_destinations = destinations;
+        });
 
         // Automatically filter when form changes
         this.filterForm.valueChanges.subscribe(() => this.filterFlights());
@@ -123,8 +91,7 @@ export class UserBookFlightComponent implements OnInit, OnDestroy {
 
     filterFlightsByDateRange(event: { start: Date; end: Date }) {
         this.filterForm.patchValue({
-            startDate: event.start,
-            endDate: event.end
+            startDate: event.start, endDate: event.end
         });
     }
 }

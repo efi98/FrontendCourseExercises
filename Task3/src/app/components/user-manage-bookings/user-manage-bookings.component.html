@@ -19,10 +19,11 @@
                         element.flight.arrival_time
                     }}</p>
                 <p>Passengers: {{ element.passengers.length }}</p>
-                <button mat-icon-button aria-label="View" class="btn btn-primary"
+                <button mat-stroked-button aria-label="View"
                         [routerLink]="['/user-booking-details', element.booking_id]">
                     View
                 </button>
+
             </td>
         </ng-container>
 
