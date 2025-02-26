@@ -9,3 +9,13 @@ body {
   left: 0;
   padding: 2rem;
 }
+
+.stroked-text {
+  color: white; /* Text color */
+  text-shadow:
+          1px 1px 0px rgba(0, 0, 0, 0.7),  /* Horizontal shadow */
+          -1px -1px 0px rgba(0, 0, 0, 0.7), /* Top left shadow */
+          1px -1px 0px rgba(0, 0, 0, 0.7),  /* Bottom right shadow */
+          -1px 1px 0px rgba(0, 0, 0, 0.7);  /* Bottom left shadow */
+}
+

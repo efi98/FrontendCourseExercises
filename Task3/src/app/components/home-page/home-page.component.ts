@@ -4,12 +4,13 @@ import { MatTableModule } from "@angular/material/table";
 import { RouterModule } from "@angular/router";
 import { FlightsService } from "../../services/flights.service";
 import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
 import { CommonModule } from "@angular/common";
 import { UserBookFlightComponent } from "../user-book-flight/user-book-flight.component";
 
 @Component({
     selector: "app-last-minute-flights",
-    imports: [CommonModule, MatCardModule, MatTableModule, RouterModule, MatIconModule, UserBookFlightComponent],
+    imports: [CommonModule, MatCardModule, MatButtonModule, MatTableModule, RouterModule, MatIconModule, UserBookFlightComponent],
     templateUrl: "./home-page.component.html",
     styleUrl: "./home-page.component.scss",
 })
